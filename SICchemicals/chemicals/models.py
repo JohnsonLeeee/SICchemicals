@@ -2,45 +2,53 @@ from django.db import models
 
 # Create your models here# .
 
-
-class Author(models.Model):  # 继承于models.Model这个父类,从而实现多态
-    first_name = models.CharField(max_length=32)  # 名字的字段,使用字符串格式,最大长度32
-    last_name = models.CharField(max_length=32)
-    email = models.EmailField()  # email字段,使用email自带的格式
-
-
-class Chemical(models.Model):
-    CAS = models.CharField(max_length=32)
-    chinese_name = models.CharField(max_length=32)
-    english_name = models.CharField(max_length=32)
-    size = models.CharField(max_length=32)
-    num = models.IntegerField()
-    location = models.CharField(max_length=32)
-    goumairen = models.CharField(max_length=32)
-    shenpiren = models.CharField(max_length=32)
-    rukutime = models.DateField()
-    note = models.TextField(max_length=1000)
-
-    def __str__(self):
-        return self.chinese_name+self.english_name
-
-
-
+PUBLIC_OR_PRIVATE_CHOICES = (
+    ("0",u"公用"),
+    ("1",u"私有")
+)
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=32)
-    phone = models.CharField(max_length=32)
-
-    def __unicode__(self):  # 定义unicode函数,是为了让对象在实例化的时候,可以返回打印输出它的名字<阿文>.不至于显示为<** object>
-        return self.name
+    name = models.CharField(u"姓名", unique=True, max_length=32)
+    contact = models.CharField(u"联系方式", max_length=32)
 
 
-class Chemicals(models.Model):
-    CAS = models.CharField(max_length=32)
-    chinese_name = models.CharField(max_length=32)
-    english_name = models.CharField(max_length=32)
-    details = models.TextField(max_length=32)
+class Student(Person):
+    pass
 
-    def __unicode__(self):  # 定义unicode函数,是为了让对象在实例化的时候,可以返回打印输出它的名字<阿文>.不至于显示为<** object>
-        return "%s(%s)" % (self.chinese_name, self.english_name)
+
+class Staff(Person):
+    pass
+
+
+class ChemicalsMessage(models.Model):
+    CAS = models.CharField(unique=True, null=False, numax_length=32)
+    chinese_name = models.CharField(u"中文名称", max_length=64)  # 如有别名，请用逗号分隔
+    english_name = models.CharField(u"英文名称", max_length=64)    # 如有别名，请用逗号分隔
+    chemical_fomula = models.CharField(u"化学式", max_length=64)   # 如有别名，请用逗号分隔
+    details = models.TextField(u"详细信息")         # 比如存储方式，易燃易爆，有无毒害，等
+
+
+class Location(models.Model):
+    location = models.CharField(u"存储位置", unique=True, null=False, max_length=32)
+    resbosible_man = models.ForeignKey(Person, verbose_name=u"柜子负责人", to_field=Person.name)
+    details = models.TextField(u"详细信息")      # 柜子的性质
+
+
+class Chemical(models.Model):
+    CAS = models.ForeignKey(ChemicalsMessage, to_field=ChemicalsMessage.CAS)
+    size = models.CharField(u"规格", max_length=32)
+    number = models.IntegerField(u"数量", default=1)
+    public_or_private = models.CharField(u"公用/私人", choices=PUBLIC_OR_PRIVATE_CHOICES, default="0", max_length=4)
+    location = models.ForeignKey(Location, verbose_name=u"存储位置", null=False, to_field=Location.location)
+    entry_time = models.DateField(u"入库时间", auto_now_add=True)
+    purchaser = models.ForeignKey(Person, null=False, verbose_name=u"购买人")
+    approver = models.ForeignKey(Staff, null=False, verbose_name=u"审批人")
+    responsible_man = models.ForeignKey(Person, default=purchaser, null=False, verbose_name=u"负责人")
+
+
+
+
+
+
+
