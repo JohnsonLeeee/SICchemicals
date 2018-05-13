@@ -22,7 +22,7 @@ class Staff(Person):
 
 
 class ChemicalsMessage(models.Model):
-    CAS = models.CharField(unique=True, null=False, numax_length=32)
+    CAS = models.CharField(unique=True, null=False, max_length=32)
     chinese_name = models.CharField(u"中文名称", max_length=64)  # 如有别名，请用逗号分隔
     english_name = models.CharField(u"英文名称", max_length=64)    # 如有别名，请用逗号分隔
     chemical_fomula = models.CharField(u"化学式", max_length=64)   # 如有别名，请用逗号分隔
