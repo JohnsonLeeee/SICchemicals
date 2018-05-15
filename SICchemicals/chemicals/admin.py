@@ -33,7 +33,8 @@ class ChemicalAdmin(admin.ModelAdmin):
 
     list_filter = ['location', 'purchaser',  'approver', 'public_or_private', 'responsible_man']
 
-    # search_fields = ['chemical', 'Person']
+    search_fields = ['name', 'chemical_formula', 'CAS', 'location__location',
+                     'purchaser__name', 'approver__name', 'responsible_man__name', 'details']
 
 
 
