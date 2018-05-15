@@ -4,4 +4,13 @@ from django.contrib import admin
 
 from .models import Chemical, Person, Staff, Student, Location, ChemicalsMessage
 
-admin.site.register(Chemical, Person, Staff, Student, Location, ChemicalsMessage)
+admin.site.register(Chemical)
+admin.site.register(Staff)
+admin.site.register(Student)
+admin.site.register(Location)
+admin.site.register(ChemicalsMessage)
+
+
+
+
+
