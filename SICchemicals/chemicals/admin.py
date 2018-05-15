@@ -12,17 +12,17 @@ admin.site.register(ChemicalsMessage)
 
 @admin.register(Chemical)
 class ChemicalAdmin(admin.ModelAdmin):
-    list_display = ['id', 'CAS', 'public_or_private', 'size', 'number',
+    list_display = ['id', 'chemical', 'public_or_private', 'size', 'number',
                     'location', 'entry_time', 'purchaser', 'approver', 'responsible_man'
                     ]
 
-    list_per_page = 30
-
     ordering = ('id',)
 
-    list_editable = ['CAS', 'public_or_private', 'size',
-                     'number', 'location', 'purchaser', 'approver', 'responsible_man'
-                     ]
+    list_editable = ['number']
+
+    list_filter = ['location', 'purchaser',  'approver', 'responsible_man']
+
+    search_fields = ['chemical', 'Person']
 
 
 

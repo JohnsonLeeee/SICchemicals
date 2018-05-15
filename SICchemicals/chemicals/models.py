@@ -66,7 +66,7 @@ class Location(models.Model):
 
 
 class Chemical(models.Model):
-    CAS = models.ForeignKey(ChemicalsMessage)
+    chemical = models.ForeignKey(ChemicalsMessage, verbose_name=u"药品名称")
     size = models.CharField(u"规格", null=True, max_length=32, blank=True)
     number = models.IntegerField(u"数量", default=1)
     public_or_private = models.CharField(u"公用/私人", choices=PUBLIC_OR_PRIVATE_CHOICES, default="0", max_length=4)
@@ -76,6 +76,7 @@ class Chemical(models.Model):
     approver = models.ForeignKey(Staff, verbose_name=u"审批人", related_name="approver", null=True, blank=True)
     responsible_man = models.ForeignKey(Person, verbose_name=u"负责人",
                                         related_name="responsible_man", null=True, blank=True)
+    notes = models.TextField(u'备注', null=True, blank=True)
 
     class Meta:
         verbose_name = u"药品列表"
@@ -83,7 +84,7 @@ class Chemical(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return self.CAS.chinese_name + " " + self.CAS.chemical_formula
+        return self.chemical.chinese_name + " " + self.location.location
 
 
 
