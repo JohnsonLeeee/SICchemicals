@@ -22,6 +22,7 @@ class Person(models.Model):
 
 
 class Student(Person):
+    # 以后可添加导师字段
     class Meta:
         verbose_name = u"学生表"
         verbose_name_plural = verbose_name

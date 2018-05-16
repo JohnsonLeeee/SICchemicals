@@ -15,6 +15,7 @@ class PersonInLine(admin.TabularInline):
     model = Person
     extra = 1
 """
+
 admin.site.site_header = u"上硅所碳化物组药品管理系统"
 admin.site.site_title = u"硅所碳化物组药品管理"
 admin.site.register(Staff)
@@ -47,6 +48,7 @@ class ChemicalAdmin(admin.ModelAdmin):
                      'purchaser__name', 'approver__name', 'responsible_man__name', 'details']
 
     list_display_links = ['id', 'name', 'chemical_formula']
+
 
 
 
