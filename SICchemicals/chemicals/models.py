@@ -13,7 +13,7 @@ class Person(models.Model):
     contact = models.CharField(u"联系方式", null=True, max_length=32, blank=True)
 
     class Meta:
-        verbose_name = u"人员"
+        verbose_name = u"人员表"
         verbose_name_plural = verbose_name
         ordering = ["name"]
 
@@ -23,14 +23,14 @@ class Person(models.Model):
 
 class Student(Person):
     class Meta:
-        verbose_name = u"学生"
+        verbose_name = u"学生表"
         verbose_name_plural = verbose_name
         ordering = ["name"]
 
 
 class Staff(Person):
     class Meta:
-        verbose_name = u"老师/职工"
+        verbose_name = u"老师/职工表"
         verbose_name_plural = verbose_name
         ordering = ["id"]
 
@@ -40,7 +40,7 @@ class Location(models.Model):
     details = models.TextField(u"详细信息", null=True, blank=True)      # 柜子的详细信息
 
     class Meta:
-        verbose_name = u"存储位置信息"
+        verbose_name = u"存储位置表"
         verbose_name_plural = verbose_name
         ordering = ["id"]
 
@@ -81,7 +81,7 @@ class Chemical(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        return self.name + "-" + str(self.id)
+        return str(self.id) + "-" + self.name
 
 
 
